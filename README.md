@@ -154,7 +154,7 @@ FastText embeddings for Turkish can be downloaded from [here (~2.6G)](https://fa
 
 # Results
 
-```
+<!-- ```
               precision    recall  f1-score   support
 
        B-LOC       0.95      0.95      0.95      1066
@@ -168,8 +168,24 @@ FastText embeddings for Turkish can be downloaded from [here (~2.6G)](https://fa
     accuracy                           0.99     43281
    macro avg       0.94      0.94      0.94     43281
 weighted avg       0.99      0.99      0.99     43281
-```
+``` -->
 
+```
+              precision    recall  f1-score   support
+
+       B-LOC       0.95      0.95      0.95      1066
+       B-ORG       0.90      0.95      0.93       744
+       B-PER       0.95      0.94      0.95      1347
+       I-LOC       0.94      0.88      0.91       194
+       I-ORG       0.88      0.97      0.92       545
+       I-PER       0.95      0.96      0.95       654
+           O       1.00      0.99      1.00     38731
+
+    accuracy                           0.99     43281
+   macro avg       0.94      0.95      0.94     43281
+weighted avg       0.99      0.99      0.99     43281
+
+```
 
 # Improvements
 
