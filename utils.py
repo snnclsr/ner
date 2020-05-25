@@ -1,4 +1,5 @@
 import math
+from pathlib import Path
 from typing import List, Dict, Optional, Tuple
 
 import pickle
@@ -18,12 +19,11 @@ idx2tag = {idx: tag for tag, idx in tag2idx.items()}
 
 def predict_sentence(model, sentence, w2i, i2t, device="cpu"):
 
-    encoded_sent = encode_sent(sentence, w2i)
-    print("Encoded sent")
-    print(encoded_sent)
+    encoded_sent = encode_sent(sentence, w2i)  
     score, tags = model([encoded_sent])
     tags = decode_tags(tags[0], i2t)
     return score.item(), tags
+
 
 def load_pickle(filename):
     
@@ -31,9 +31,6 @@ def load_pickle(filename):
         data = pickle.load(f)
 
     return data
-
-# ================================================
-from pathlib import Path
 
 
 def load_data(filename: str):

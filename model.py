@@ -49,7 +49,7 @@ class NERTagger(nn.Module):
                             batch_first=True)
         if self.bidirectional:
             hidden_size = 2 * hidden_size
-        self.crf = CRF(hidden_size, output_size)
+        self.crf = CRF(hidden_size, output_size, device=device)
 
     def loss(self, x: List[List], tags: List[List]):
         features, mask = self.feature_extraction(x)
