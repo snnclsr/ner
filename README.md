@@ -76,19 +76,22 @@ Sentences and the tags should be in separate files. Expected format is:
 
 train_words:
 
-    sent1
-    sent2
-    sent3
+    sent1_token1 sent1_token2 sent1_token3 ...
+    sent2_token1 sent_2token2 sent2_token ...
     ...
 
 train_tags:
 
-    tags1
-    tags2
-    tags3
+    sent1_tag1 sent1_tag2 sent1_tag3 ...
+    sent2_tag1 sent2_tag2 sent2_tag3 ...
     ...
 
 We also expect the sentences to be pre-tokenized. The code will split the sentences only from the space.
+
+# Dataset
+
+You can find the dataset from [this](https://github.com/stefan-it/turkish-bert/issues/10#issuecomment-604907879) link. I split the dataset into three parts as train, validation, and test set. Split ratios are  0.8, 0.1, 0.1 respectively. 
+
 
 # Train
 ```
@@ -172,7 +175,7 @@ weighted avg       0.99      0.99      0.99     43281
 
 * Model saving/loading is handled poorly. There might be better ways to do it (Current version works btw). Switching from GPU to CPU interface is also needs to be handled.
 * Allowing the model to be saved/loaded for being able to continue the training later.
-* Allowing for different kinds of optimization algorithms and different schedules (Adam is hardcoded right now).
+* Allowing for different kinds of optimization algorithms and different schedulers (Adam is hardcoded right now).
 * Different feature extractor models like BERT, ELECTRA, etc.
 
 # References
