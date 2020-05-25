@@ -5,29 +5,6 @@ This repository implements a Named Entity Recognition system for the Turkish Lan
 The model's architecture is Bi-LSTM + CRF. FastText embeddings are used as a pre-trained word embeddings. The code also supports the variable size input.
 
 
-<!-- Our model is Bi-LSTM + CRF implemented in PyTorch.
-
-Code supports the variable size input. -->
-
-<!-- Code is mainly seperated into 4 files. 
-
-* crf.py
-
-    CRF Module
-
-
-* model.py
-
-    NER Module
-
-* train.py
-
-    Training Module
-
-* test.py
-
-    Testing Module -->
-
 # Examples
 ```python
 # For the complete example, please see the test.py
