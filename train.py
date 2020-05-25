@@ -10,12 +10,11 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 
-from seqeval.metrics import f1_score
-
 from utils import load_data, strip_sents_and_tags
 from utils import encode_sent, encode_tags, load_wv, batch_iter, decode_tags
 from config import UNIQUE_TAGS, PAD_IDX, idx2tag, tag2idx
 from model import NERTagger
+from metrics import flat_f1_score, flat_classification_report
 
 
 logging.basicConfig(
@@ -121,7 +120,8 @@ def train(model, loss_fn, optimizer, train_dl, valid_dl, n_epochs=1, device="cpu
         valid_losses.append(valid_loss)
         print("Validation Loss: {:.5f}".format(valid_loss))
         val_targets, val_preds = generate_tags(model, valid_dl, device=device)
-        print("Validation f1-score: ", f1_score(val_targets, val_preds, average="macro"))
+        print("Validation f1-score: ", flat_f1_score(val_targets, val_preds, average="macro"))
+
             
         print("=" * 50)
     
@@ -139,7 +139,7 @@ def main():
     arg_parser.add_argument("--num_layers", type=int, default=1, 
                             help="Number of RNN Layers to use")
     arg_parser.add_argument("--bidirectional", action="store_true", 
-                            help="Option to make RNNs bidirectional")
+                            help="Option to make the RNNs bidirectional")
     arg_parser.add_argument("--dropout_p", type=float, default=0.1, 
                             help="Dropout probability for the embedding layer")
     arg_parser.add_argument("--device", type=str, default="cpu", 
@@ -148,7 +148,6 @@ def main():
                             help="Number of epochs to train the model")
     arg_parser.add_argument("--model_name", type=str, default="model.pth", 
                             help="Model name to save")
-    # arg_parser.add_argument("")
 
     args = arg_parser.parse_args()
     args = vars(args)
@@ -191,7 +190,7 @@ def main():
     w2v_fn = args["w2v_file"]
     logger.info(f"Loading the pretrained word embeddings from {w2v_fn}")
 
-    word_vectors = load_wv(args["w2v_file"], limit=100)
+    word_vectors = load_wv(args["w2v_file"])
     # We will add 2 additional vectors for the padding & unknown tokens.
     # padding_idx will be the first index of the word vector matrix.
     # unknown_idx will be the second index of the word vector matrix.
@@ -251,6 +250,8 @@ def main():
     }
     torch.save(params, args["model_name"])
 
+    targets, preds = generate_tags(model, valid_data, device=device)
+    print(flat_classification_report(targets, preds))
 
 
 

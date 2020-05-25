@@ -116,7 +116,7 @@ python train.py -h
 ```bash
 python train.py --train_data train_words train_tags --valid_data valid_words valid_tags 
 --w2v_file <w2v_file> --hidden_dim 64 --num_layers 2 --bidirectional 
---dropout_p 0.3 --device "cuda"
+--dropout_p 0.3 --n_epochs 10 --device "cuda"
 ```
 
 # Test
@@ -137,6 +137,7 @@ optional arguments:
 `w2i_file` is generated from the pre-trained word embeddings vocabulary. You can generate it by using the following code.
 
 ```python
+w2v_model = load_wv(w2v_model_path) # FastText model path
 index2word = ["<pad>", "<unk>"] + w2v_model.index2word
 word2index = {word: index for index, word in enumerate(index2word)}
 
@@ -147,6 +148,25 @@ with open("word2index.pkl", "wb") as f:
 # FastText Embeddings
 
 FastText embeddings for Turkish can be downloaded from [here (~2.6G)](https://fasttext.cc/docs/en/crawl-vectors.html). The code currently supports only the **`vec`** extension.
+
+# Results
+
+```
+              precision    recall  f1-score   support
+
+       B-LOC       0.95      0.95      0.95      1066
+       B-ORG       0.95      0.90      0.92       744
+       B-PER       0.96      0.94      0.95      1347
+       I-LOC       0.89      0.92      0.90       194
+       I-ORG       0.92      0.94      0.93       545
+       I-PER       0.95      0.96      0.95       654
+           O       1.00      1.00      1.00     38731
+
+    accuracy                           0.99     43281
+   macro avg       0.94      0.94      0.94     43281
+weighted avg       0.99      0.99      0.99     43281
+```
+
 
 # Improvements
 
@@ -159,3 +179,4 @@ FastText embeddings for Turkish can be downloaded from [here (~2.6G)](https://fa
 
 * [Pytorch Tutorial including CRF](https://pytorch.org/tutorials/beginner/nlp/advanced_tutorial.html)
 * [Turkish BERT (BERTurk)](https://github.com/stefan-it/turkish-bert)
+* [sklearn-crfsuite metrics](https://sklearn-crfsuite.readthedocs.io/en/latest/_modules/sklearn_crfsuite/metrics.html)
