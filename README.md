@@ -134,6 +134,16 @@ optional arguments:
   --w2i_file W2I_FILE   Word2Index Vocabulary
 ```
 
+`w2i_file` is generated from the pre-trained word embeddings vocabulary. You can generate it by using the following code.
+
+```python
+index2word = ["<pad>", "<unk>"] + w2v_model.index2word
+word2index = {word: index for index, word in enumerate(index2word)}
+
+with open("word2index.pkl", "wb") as f:
+    pickle.dump(word2index, f)
+```
+
 # FastText Embeddings
 
 FastText embeddings for Turkish can be downloaded from [here (~2.6G)](https://fasttext.cc/docs/en/crawl-vectors.html). The code currently supports only the **`vec`** extension.
