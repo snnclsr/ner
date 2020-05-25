@@ -1,6 +1,9 @@
 # Named Entity Recognition
 
-This repository implements a Named Entity Recognition system for Turkish Language. The code will probably work for the other languages as well if the input data format criterion matches.
+This repository implements a Named Entity Recognition system for the Turkish Language. The code will probably work for the other languages as well if the input data format criterion matches.
+
+The model's architecture is Bi-LSTM + CRF. FastText embeddings are used as a pre-trained word embeddings. The code also supports the variable size input.
+
 
 <!-- Our model is Bi-LSTM + CRF implemented in PyTorch.
 
@@ -27,7 +30,7 @@ Code supports the variable size input. -->
 
 # Examples
 ```python
-# For complete example, please see the test.py
+# For the complete example, please see the test.py
 sentence = (
     "Aziz Nesin 'in yazmış olduğu Nesin Yayınevi tarafından basılan ' Bir Sürgünün Anıları ' "
     "isimli kitap Nesin 'in sürgün yıllarındaki Bursa anılarını anlatıyor ."
@@ -69,6 +72,24 @@ for token, tag in zip(sentence_tokens, tags):
 
 # Data Format
 
+Sentences and the tags should be in separate files. Expected format is:
+
+train_words:
+
+    sent1
+    sent2
+    sent3
+    ...
+
+train_tags:
+
+    tags1
+    tags2
+    tags3
+    ...
+
+We also expect the sentences to be pre-tokenized. The code will split the sentences only from the space.
+
 # Train
 ```
 python train.py -h
@@ -77,7 +98,7 @@ python train.py -h
                     Training data
 --valid_data VALID_DATA [VALID_DATA ...]
                     Validation Data
---w2v_file W2V_FILE   Pretrained Word Embeddings
+--w2v_file W2V_FILE   Pre-trained Word Embeddings
 --hidden_dim HIDDEN_DIM
                     Hidden dimension for the RNN
 --num_layers NUM_LAYERS
@@ -115,14 +136,14 @@ optional arguments:
 
 # FastText Embeddings
 
-FastText embeddings for Turkish can be downloaded from [here (~2.6G)](https://fasttext.cc/docs/en/crawl-vectors.html). The code currently supports only the `vec` extension.
+FastText embeddings for Turkish can be downloaded from [here (~2.6G)](https://fasttext.cc/docs/en/crawl-vectors.html). The code currently supports only the **`vec`** extension.
 
 # Improvements
 
-* Model saving/loading is handled poorly. There might be better ways to do it (Current version works btw). Also changing from GPU to CPU interface is also need to be handled.
+* Model saving/loading is handled poorly. There might be better ways to do it (Current version works btw). Switching from GPU to CPU interface is also needs to be handled.
 * Allowing the model to be saved/loaded for being able to continue the training later.
-* Allowing for different kind of optimization algorithms and different schedules (Adam is hardcoded right now).
-* Different feature extractor models like BERT, ELECTRA etc.
+* Allowing for different kinds of optimization algorithms and different schedules (Adam is hardcoded right now).
+* Different feature extractor models like BERT, ELECTRA, etc.
 
 # References
 
