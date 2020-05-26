@@ -4,6 +4,8 @@ This repository implements a Named Entity Recognition system for the Turkish Lan
 
 The model's architecture is Bi-LSTM + CRF. FastText embeddings are used as a pre-trained word embeddings. The code also supports the variable size input.
 
+<!-- # We assume that the sentence is already tokenized. -->
+
 
 # Examples
 ```python
@@ -12,7 +14,6 @@ sentence = (
     "Aziz Nesin 'in yazmış olduğu Nesin Yayınevi tarafından basılan ' Bir Sürgünün Anıları ' "
     "isimli kitap Nesin 'in sürgün yıllarındaki Bursa anılarını anlatıyor ."
 )
-# We assume that the sentence is already tokenized.
 sentence_tokens = sentence.split()
 score, tags = predict_sentence(model, sentence_tokens, w2i, idx2tag)
 
@@ -99,7 +100,10 @@ python train.py --train_data train_words train_tags --valid_data valid_words val
 --dropout_p 0.3 --n_epochs 10 --device "cuda"
 ```
 
+
 # Test
+
+A trained Turkish model file can be downloaded from [this](https://drive.google.com/open?id=1IYTSkX8VCi33-KYMrxrzN-up25hfEfX3) link.
 
 ```bash
 python test.py -h
@@ -124,6 +128,9 @@ word2index = {word: index for index, word in enumerate(index2word)}
 with open("word2index.pkl", "wb") as f:
     pickle.dump(word2index, f)
 ```
+
+Turkish w2i_file can be downloaded from [this](https://drive.google.com/open?id=1mSU7oIbY1-G7PVr7NtSMS-F1Vdf5rZ3G) link.
+
 
 # FastText Embeddings
 
