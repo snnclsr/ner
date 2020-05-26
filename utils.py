@@ -116,23 +116,6 @@ def pad_sequences(sequences: List[List], pad_idx: Optional[int]=0) -> List[List]
     return padded_sequence
 
 
-def batch_iter(data: List[List], batch_size: int, shuffle: bool=False) -> Tuple[List, List]:
-    
-    batch_num = math.ceil(len(data) / batch_size)
-    index_array = list(range(len(data)))
-    
-    if shuffle:
-        np.random.shuffle(index_array)
-
-    for i in range(batch_num):
-        indices = index_array[i * batch_size: (i+1) * batch_size]
-        examples = [data[idx] for idx in indices]
-        examples = sorted(examples, key=lambda e: len(e[0]), reverse=True)
-        sents = [e[0] for e in examples]
-        tags = [e[1] for e in examples]
-        yield sents, tags
-
-
 def to_tensor(sents: List[List], device: str="cpu") -> Tensor:
     """
     Pad the sentences and convert them to the torch tensor.
@@ -151,3 +134,21 @@ def generate_sent_masks(sents: Tensor, lengths: Tensor) -> Tensor:
     bs = sents.shape[0]
     mask = torch.arange(max_len).expand(bs, max_len) < lengths.unsqueeze(1)
     return mask.byte()
+
+
+def batch_iter(data: List[List], batch_size: int, shuffle: bool=False) -> Tuple[List, List]:
+    
+    batch_num = math.ceil(len(data) / batch_size)
+    index_array = list(range(len(data)))
+    
+    if shuffle:
+        np.random.shuffle(index_array)
+
+    for i in range(batch_num):
+        indices = index_array[i * batch_size: (i+1) * batch_size]
+        examples = [data[idx] for idx in indices]
+        examples = sorted(examples, key=lambda e: len(e[0]), reverse=True)
+        sents = [e[0] for e in examples]
+        tags = [e[1] for e in examples]
+        yield sents, tags
+
