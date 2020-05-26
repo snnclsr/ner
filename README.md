@@ -4,9 +4,6 @@ This repository implements a Named Entity Recognition system for the Turkish Lan
 
 The model's architecture is Bi-LSTM + CRF. FastText embeddings are used as a pre-trained word embeddings. The code also supports the variable size input.
 
-<!-- # We assume that the sentence is already tokenized. -->
-
-
 # Examples
 ```python
 # For the complete example, please see the test.py
@@ -14,6 +11,7 @@ sentence = (
     "Aziz Nesin 'in yazmış olduğu Nesin Yayınevi tarafından basılan ' Bir Sürgünün Anıları ' "
     "isimli kitap Nesin 'in sürgün yıllarındaki Bursa anılarını anlatıyor ."
 )
+# We assume that the sentence is already tokenized.
 sentence_tokens = sentence.split()
 score, tags = predict_sentence(model, sentence_tokens, w2i, idx2tag)
 
