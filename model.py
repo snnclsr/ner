@@ -12,11 +12,12 @@ from crf import CRF
 class NERTagger(nn.Module):
     """
     NER network.
-    num_embeddings: how many word vectors there will be?
-    embedding_dim: dimension of the word vectors
     hidden_size: lstm hidden_size
     output_size: total number of tags
-    bidirectional: lstm will be bidirectional or not?
+    num_layers: Number of RNN layers
+    bidirectional: RNN will be bidirectional or not?
+    weights: Pretrained word embeddings
+
     embedding layer will fill the pad idx with padding vector.
     """
     
@@ -25,9 +26,6 @@ class NERTagger(nn.Module):
                  device: str="cpu", weights: Optional=None, num_embeddings: Optional=None, 
                  embedding_dim: Optional=None):
         super(NERTagger, self).__init__()
-        # This will be None if we are loading the trained model.
-        # If we train from scratch we must include the embedding layer
-        # to the __init__ method.
         if weights is not None:
             self.embedding = nn.Embedding.from_pretrained(weights, padding_idx=PAD_IDX)
         else:
